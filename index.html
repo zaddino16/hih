@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🍩 Donut Plus</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#090909;
+  color:#fff;
+  min-height:100vh;
+}
+button,input{font:inherit}
+
+:root{
+  --orange:#ff8a00;
+  --orange2:#ffb13b;
+  --panel:#141414;
+  --panel2:#1b1b1b;
+  --border:#292929;
+  --muted:#999;
+}
+
+.nav{
+  height:70px;
+  background:#101010;
+  border-bottom:1px solid #292929;
+  display:flex;
+  align-items:center;
+  padding:0 25px;
+  gap:25px;
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+
+.logo{
+  font-size:23px;
+  font-weight:900;
+  color:var(--orange);
+  white-space:nowrap;
+}
+
+.navlinks{
+  display:flex;
+  gap:8px;
+  flex:1;
+}
+
+.navlinks button{
+  background:transparent;
+  border:0;
+  color:#bbb;
+  padding:10px 13px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.navlinks button:hover{
+  background:#202020;
+  color:white;
+}
+
+.balance{
+  background:#1b1b1b;
+  border:1px solid #303030;
+  border-radius:9px;
+  padding:10px 14px;
+  color:#ffb13b;
+  font-weight:bold;
+}
+
+.profile{
+  background:var(--orange);
+  color:#111;
+  border:0;
+  padding:10px 15px;
+  border-radius:9px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.page{
+  display:none;
+  max-width:1250px;
+  margin:auto;
+  padding:35px 20px 70px;
+}
+
+.page.active{display:block}
+
+.hero{
+  min-height:390px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:40px;
+  padding:50px;
+  border:1px solid #292929;
+  border-radius:22px;
+  background:
+    radial-gradient(circle at 80% 40%,#542b08 0%,transparent 35%),
+    linear-gradient(135deg,#181818,#0c0c0c);
+  overflow:hidden;
+}
+
+.hero h1{
+  font-size:60px;
+  line-height:1;
+  margin-bottom:18px;
+}
+
+.hero h1 span{color:var(--orange)}
+
+.hero p{
+  color:#aaa;
+  font-size:18px;
+  max-width:600px;
+  line-height:1.6;
+}
+
+.heroButtons{
+  display:flex;
+  gap:12px;
+  margin-top:25px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:13px 19px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.primary{
+  background:var(--orange);
+  color:#111;
+}
+
+.secondary{
+  background:#242424;
+  color:white;
+  border:1px solid #333;
+}
+
+.donut{
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  background:#9a4b17;
+  border:42px solid #d87925;
+  box-shadow:0 0 70px #ff8a0040;
+  position:relative;
+  animation:float 3s ease-in-out infinite;
+}
+
+.donut:after{
+  content:"";
+  position:absolute;
+  inset:35px;
+  border-radius:50%;
+  background:#090909;
+}
+
+@keyframes float{
+  50%{transform:translateY(-12px) rotate(6deg)}
+}
+
+.sectionTitle{
+  margin:45px 0 18px;
+  font-size:27px;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+}
+
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:22px;
+}
+
+.card:hover{
+  border-color:#633a12;
+  transform:translateY(-2px);
+}
+
+.gameIcon{
+  font-size:38px;
+  margin-bottom:15px;
+}
+
+.card h3{margin-bottom:7px}
+
+.muted{
+  color:var(--muted);
+  line-height:1.5;
+}
+
+.gameButton{
+  width:100%;
+  margin-top:17px;
+  padding:11px;
+  border:0;
+  border-radius:8px;
+  background:#252525;
+  color:#fff;
+  cursor:pointer;
+}
+
+.gameButton:hover{
+  background:var(--orange);
+  color:#111;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-top:25px;
+}
+
+.stat{
+  background:#151515;
+  border:1px solid #292929;
+  padding:25px;
+  border-radius:13px;
+}
+
+.stat strong{
+  display:block;
+  font-size:30px;
+  color:var(--orange);
+  margin-top:7px;
+}
+
+.list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.row{
+  background:#151515;
+  border:1px solid #292929;
+  padding:15px 18px;
+  border-radius:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.rank{
+  color:var(--orange);
+  font-weight:900;
+}
+
+.form{
+  max-width:650px;
+  background:#151515;
+  border:1px solid #292929;
+  border-radius:15px;
+  padding:25px;
+}
+
+label{
+  display:block;
+  margin:15px 0 7px;
+  color:#bbb;
+}
+
+input{
+  width:100%;
+  padding:13px;
+  border-radius:9px;
+  border:1px solid #333;
+  background:#0d0d0d;
+  color:white;
+  outline:none;
+}
+
+input:focus{border-color:var(--orange)}
+
+.check{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:15px 0;
+  color:#aaa;
+}
+
+.check input{width:auto}
+
+.command{
+  margin-top:20px;
+  background:#080808;
+  border:1px solid #333;
+  border-radius:10px;
+  padding:15px;
+  display:none;
+}
+
+.command code{
+  color:#ffb13b;
+  word-break:break-all;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:#000b;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+  padding:20px;
+}
+
+.modalBox{
+  width:100%;
+  max-width:550px;
+  background:#151515;
+  border:1px solid #333;
+  border-radius:17px;
+  padding:25px;
+}
+
+.close{
+  float:right;
+  background:none;
+  border:0;
+  color:#aaa;
+  font-size:24px;
+  cursor:pointer;
+}
+
+.result{
+  min-height:80px;
+  margin-top:18px;
+  padding:18px;
+  background:#0b0b0b;
+  border-radius:10px;
+  border:1px solid #292929;
+  color:#ffb13b;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-weight:bold;
+}
+
+.chat{
+  height:300px;
+  overflow:auto;
+  background:#0c0c0c;
+  border:1px solid #292929;
+  border-radius:12px;
+  padding:15px;
+}
+
+.message{
+  padding:9px 0;
+  border-bottom:1px solid #202020;
+}
+
+.message b{color:var(--orange)}
+
+.chatInput{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+
+.chatInput input{flex:1}
+
+footer{
+  border-top:1px solid #252525;
+  text-align:center;
+  color:#666;
+  padding:30px;
+}
+
+.notice{
+  margin-top:25px;
+  padding:15px;
+  border-radius:10px;
+  background:#211707;
+  border:1px solid #563509;
+  color:#d8b98c;
+}
+
+@media(max-width:900px){
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .hero{padding:35px}
+  .donut{width:180px;height:180px;border-width:30px}
+}
+
+@media(max-width:650px){
+  .nav{padding:0 12px}
+  .navlinks{display:none}
+  .hero{flex-direction:column;text-align:center}
+  .hero h1{font-size:43px}
+  .cards,.stats{grid-template-columns:1fr}
+  .donut{width:160px;height:160px}
+}
+</style>
+</head>
+
+<body>
+
+<nav class="nav">
+  <div class="logo">🍩 Donut Plus</div>
+
+  <div class="navlinks">
+    <button onclick="showPage('home')">Home</button>
+    <button onclick="showPage('games')">Games</button>
+    <button onclick="showPage('leaderboard')">Leaderboard</button>
+    <button onclick="showPage('referrals')">Referrals</button>
+    <button onclick="showPage('verify')">Verify</button>
+    <button onclick="showPage('community')">Community</button>
+  </div>
+
+  <div class="balance">⭐ <span id="points">0</span></div>
+  <button class="profile" onclick="showPage('account')">Account</button>
+</nav>
+
+
+<!-- HOME -->
+<section id="home" class="page active">
+
+  <div class="hero">
+    <div>
+      <h1>Welcome to <span>Donut Plus</span></h1>
+      <p>
+        A community gaming hub with free mini-games,
+        challenges, leaderboards, referrals and Minecraft verification.
+      </p>
+
+      <div class="heroButtons">
+        <button class="btn primary" onclick="showPage('games')">
+          🎮 Play Games
+        </button>
+
+        <button class="btn secondary" onclick="showPage('verify')">
+          ✅ Verify Minecraft
+        </button>
+      </div>
+    </div>
+
+    <div class="donut"></div>
+  </div>
+
+
+  <div class="stats">
+    <div class="stat">
+      👥 Community
+      <strong>1,250+</strong>
+      <span class="muted">players</span>
+    </div>
+
+    <div class="stat">
+      🎮 Games
+      <strong>6</strong>
+      <span class="muted">free games</span>
+    </div>
+
+    <div class="stat">
+      🏆 Points
+      <strong id="homePoints">0</strong>
+      <span class="muted">your points</span>
+    </div>
+  </div>
+
+
+  <h2 class="sectionTitle">🔥 Popular Games</h2>
+
+  <div class="cards">
+
+    <div class="card">
+      <div class="gameIcon">🪙</div>
+      <h3>Coin Challenge</h3>
+      <p class="muted">Flip a virtual coin and test your luck.</p>
+      <button class="gameButton" onclick="openGame('coin')">Play</button>
+    </div>
+
+    <div class="card">
+      <div class="gameIcon">🎲</div>
+      <h3>Dice</h3>
+      <p class="muted">Roll a virtual six-sided dice.</p>
+      <button class="gameButton" onclick="openGame('dice')">Play</button>
+    </div>
+
+    <div class="card">
+      <div class="gameIcon">🗼</div>
+      <h3>Tower</h3>
+      <p class="muted">Climb the tower and discover your result.</p>
+      <button class="gameButton" onclick="openGame('tower')">Play</button>
+    </div>
+
+    <div class="card">
+      <div class="gameIcon">💎</div>
+      <h3>Mine</h3>
+      <p class="muted">Choose a tile in this free mini-game.</p>
+      <button class="gameButton" onclick="openGame('mine')">Play</button>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- GAMES -->
+<section id="games" class="page">
+
+  <h1>🎮 Free Games</h1>
+  <p class="muted">Play for fun and earn community points. No wagering.</p>
+
+  <div class="cards" style="margin-top:25px">
+
+    <div class="card">
+      <div class="gameIcon">🪙</div>
+      <h3>Coin Challenge</h3>
+      <p class="muted">Heads or tails.</p>
+      <button class="gameButton" onclick="openGame('coin')">Play</button>
+    </div>
+
+    <div class="card">
+      <div class="gameIcon">🎲</div>
+      <h3>Dice</h3>
+      <p class="muted">Roll the dice.</p>
+      <button class="gameButton" onclick="openGame('dice')">Play</button>
+    </div>
+
+    <div class="card">
+      <div class="gameIcon">🗼</div>
+      <h3>Tower</h3>
+      <p class="muted">Try to climb higher.</p>
+      <button class="gameButton" onclick="openGame('tower')">Play</button>
+    </div>
+
+    <div class="card">
+      <div class="gameIcon">💎</div>
+      <h3>Mine</h3>
+      <p class="muted">Pick a mystery tile.</p>
+      <button class="gameButton" onclick="openGame('mine')">Play</button>
+    </div>
+
+    <div class="card">
+      <div class="gameIcon">🔢</div>
+      <h3>Number Pick</h3>
+      <p class="muted">Pick a number from 1–10.</p>
+      <button class="gameButton" onclick="openGame('number')">Play</button>
+    </div>
+
+    <div class="card">
+      <div class="gameIcon">⚡</div>
+      <h3>Reaction</h3>
+      <p class="muted">Test your reaction speed.</p>
+      <button class="gameButton" onclick="openGame('reaction')">Play</button>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- LEADERBOARD -->
+<section id="leaderboard" class="page">
+
+  <h1>🏆 Leaderboard</h1>
+  <p class="muted">Top community point holders.</p>
+
+  <div class="list" style="margin-top:25px">
+
+    <div class="row">
+      <span><span class="rank">#1</span> Lunar</span>
+      <b>12,450 ⭐</b>
+    </div>
+
+    <div class="row">
+      <span><span class="rank">#2</span> Neo</span>
+      <b>10,820 ⭐</b>
+    </div>
+
+    <div class="row">
+      <span><span class="rank">#3</span> Sky</span>
+      <b>9,650 ⭐</b>
+    </div>
+
+    <div class="row">
+      <span><span class="rank">#4</span> Zaddino</span>
+      <b id="leaderPoints">0 ⭐</b>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- REFERRALS -->
+<section id="referrals" class="page">
+
+  <h1>👥 Referrals</h1>
+  <p class="muted">
+    Invite friends to the community and receive free community points.
+  </p>
+
+  <div class="form" style="margin-top:25px">
+
+    <label>Your referral code</label>
+
+    <input id="refCode" value="ZADDINO16" readonly>
+
+    <button class="btn primary" style="margin-top:12px" onclick="copyReferral()">
+      📋 Copy Referral
+    </button>
+
+    <div class="notice">
+      Referral rewards are community points only.
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- VERIFY -->
+<section id="verify" class="page">
+
+  <h1>✅ Minecraft Verification</h1>
+
+  <p class="muted">
+    Generate a verification code for your Minecraft account.
+  </p>
+
+  <div class="form" style="margin-top:25px">
+
+    <label>Minecraft username</label>
+
+    <input id="mcName" placeholder="YourMinecraftName">
+
+    <div class="check">
+      <input type="checkbox" id="bedrock">
+      <span>I am using Minecraft Bedrock Edition</span>
+    </div>
+
+    <div class="check">
+      <input type="checkbox" id="agree">
+      <span>I agree to the verification rules.</span>
+    </div>
+
+    <button class="btn primary" onclick="createVerification()">
+      Generate Verification
+    </button>
+
+    <div class="command" id="commandBox">
+      <p class="muted">Your verification command:</p>
+      <br>
+      <code id="command"></code>
+      <br><br>
+      <button class="btn primary" onclick="copyCommand()">
+        📋 Copy Command
+      </button>
+    </div>
+
+  </div>
+
+  <div class="notice">
+    This is a community verification prototype.
+    A real Minecraft/Discord verification system requires a secure backend,
+    database and server-side bot/plugin.
+  </div>
+
+</section>
+
+
+<!-- COMMUNITY -->
+<section id="community" class="page">
+
+  <h1>💬 Community</h1>
+  <p class="muted">Community chat demonstration.</p>
+
+  <div class="chat" id="chat" style="margin-top:25px">
+
+    <div class="message">
+      <b>Lunar:</b> Welcome everyone! 🍩
+    </div>
+
+    <div class="message">
+      <b>Neo:</b> Who is playing today?
+    </div>
+
+    <div class="message">
+      <b>Sky:</b> Donut Plus looks amazing!
+    </div>
+
+  </div>
+
+  <div class="chatInput">
+    <input id="chatMessage" placeholder="Write a message...">
+    <button class="btn primary" onclick="sendMessage()">Send</button>
+  </div>
+
+</section>
+
+
+<!-- ACCOUNT -->
+<section id="account" class="page">
+
+  <h1>👤 Account</h1>
+
+  <div class="form" style="margin-top:25px">
+
+    <label>Username</label>
+    <input id="accountName" placeholder="Enter username">
+
+    <button class="btn primary" style="margin-top:15px" onclick="saveAccount()">
+      Save Account
+    </button>
+
+    <div class="notice">
+      Account data is stored locally in your browser in this demo.
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- GAME MODAL -->
+<div class="modal" id="gameModal">
+
+  <div class="modalBox">
+
+    <button class="close" onclick="closeGame()">×</button>
+
+    <h2 id="gameTitle">Game</h2>
+
+    <p class="muted" id="gameDescription" style="margin-top:8px"></p>
+
+    <div class="result" id="gameResult">
+      Ready?
+    </div>
+
+    <button class="btn primary"
+            style="width:100%;margin-top:15px"
+            onclick="playCurrentGame()">
+      🎮 Play
+    </button>
+
+  </div>
+
+</div>
+
+
+<footer>
+  🍩 <b>Donut Plus</b><br><br>
+  Community gaming platform • Free games • Minecraft verification<br><br>
+  <span>Unofficial community project. Not affiliated with Donut SMP or DonutFlip.</span>
+</footer>
+
+
+<script>
+
+let points = Number(localStorage.getItem("donut_points") || 0);
+let currentGame = "";
+
+const games = {
+
+  coin:{
+    title:"🪙 Coin Challenge",
+    description:"Flip a virtual coin.",
+  },
+
+  dice:{
+    title:"🎲 Dice",
+    description:"Roll a virtual six-sided dice.",
+  },
+
+  tower:{
+    title:"🗼 Tower",
+    description:"Try to climb the tower.",
+  },
+
+  mine:{
+    title:"💎 Mine",
+    description:"Choose a mystery tile.",
+  },
+
+  number:{
+    title:"🔢 Number Pick",
+    description:"Pick a number from 1 to 10.",
+  },
+
+  reaction:{
+    title:"⚡ Reaction",
+    description:"A quick reaction challenge.",
+  }
+
+};
+
+
+function updatePoints(){
+
+  document.getElementById("points").textContent =
+    points.toLocaleString();
+
+  document.getElementById("homePoints").textContent =
+    points.toLocaleString();
+
+  document.getElementById("leaderPoints").textContent =
+    points.toLocaleString()+" ⭐";
+
+  localStorage.setItem("donut_points",points);
+}
+
+
+function showPage(id){
+
+  document.querySelectorAll(".page").forEach(p=>{
+    p.classList.remove("active");
+  });
+
+  const page=document.getElementById(id);
+
+  if(page) page.classList.add("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+function openGame(name){
+
+  currentGame=name;
+
+  document.getElementById("gameTitle").textContent =
+    games[name].title;
+
+  document.getElementById("gameDescription").textContent =
+    games[name].description;
+
+  document.getElementById("gameResult").textContent =
+    "Ready?";
+
+  document.getElementById("gameModal").style.display="flex";
+}
+
+
+function closeGame(){
+
+  document.getElementById("gameModal").style.display="none";
+
+}
+
+
+function addPoints(amount){
+
+  points += amount;
+  updatePoints();
+
+}
+
+
+function playCurrentGame(){
+
+  let result="";
+
+  if(currentGame==="coin"){
+
+    result =
+      Math.random()<0.5
+      ? "🪙 Heads!"
+      : "🪙 Tails!";
+
+    addPoints(10);
+
+  }
+
+  else if(currentGame==="dice"){
+
+    const roll=Math.floor(Math.random()*6)+1;
+
+    result="🎲 You rolled "+roll+"!";
+
+    addPoints(roll*2);
+
+  }
+
+  else if(currentGame==="tower"){
+
+    const floor=Math.floor(Math.random()*10)+1;
+
+    result="🗼 You reached floor "+floor+"!";
+
+    addPoints(floor*3);
+
+  }
+
+  else if(currentGame==="mine"){
+
+    const tile=Math.floor(Math.random()*9)+1;
+
+    result="💎 You discovered tile #"+tile+"!";
+
+    addPoints(15);
+
+  }
+
+  else if(currentGame==="number"){
+
+    const number=Math.floor(Math.random()*10)+1;
+
+    result="🔢 Your number is "+number+"!";
+
+    addPoints(number);
+
+  }
+
+  else if(currentGame==="reaction"){
+
+    const ms=Math.floor(Math.random()*500)+200;
+
+    result="⚡ Reaction result: "+ms+" ms!";
+
+    addPoints(20);
+
+  }
+
+  document.getElementById("gameResult").textContent=result;
+
+}
+
+
+function createVerification(){
+
+  const name=document.getElementById("mcName").value.trim();
+
+  const bedrock=document.getElementById("bedrock").checked;
+
+  const agree=document.getElementById("agree").checked;
+
+  if(!name){
+
+    alert("Please enter your Minecraft username.");
+
+    return;
+
+  }
+
+  if(!agree){
+
+    alert("Please accept the verification rules.");
+
+    return;
+
+  }
+
+  if(!/^[A-Za-z0-9_.]+$/.test(name)){
+
+    alert("Please use a valid Minecraft username.");
+
+    return;
+
+  }
+
+  let username=name;
+
+  if(bedrock && !username.startsWith(".")){
+
+    username="."+username;
+
+  }
+
+  const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+  let code="";
+
+  for(let i=0;i<8;i++){
+
+    code+=chars[Math.floor(Math.random()*chars.length)];
+
+  }
+
+  const command="/verify "+code;
+
+  document.getElementById("command").textContent=command;
+
+  document.getElementById("commandBox").style.display="block";
+
+  localStorage.setItem(
+    "last_verification",
+    JSON.stringify({
+      username:username,
+      code:code,
+      date:new Date().toISOString()
+    })
+  );
+
+  alert(
+    "Verification created for "+username+
+    ". Copy the command below."
+  );
+
+}
+
+
+function copyCommand(){
+
+  const text=document.getElementById("command").textContent;
+
+  navigator.clipboard.writeText(text)
+    .then(()=>alert("Command copied!"))
+    .catch(()=>alert("Copy failed. Please copy it manually."));
+
+}
+
+
+function copyReferral(){
+
+  const text=document.getElementById("refCode").value;
+
+  navigator.clipboard.writeText(text)
+    .then(()=>alert("Referral code copied!"));
+
+}
+
+
+function sendMessage(){
+
+  const input=document.getElementById("chatMessage");
+
+  const message=input.value.trim();
+
+  if(!message)return;
+
+  const div=document.createElement("div");
+
+  div.className="message";
+
+  div.innerHTML=
+    "<b>You:</b> "+
+    escapeHTML(message);
+
+  document.getElementById("chat").appendChild(div);
+
+  input.value="";
+
+  document.getElementById("chat").scrollTop =
+    document.getElementById("chat").scrollHeight;
+
+}
+
+
+function saveAccount(){
+
+  const name=document
+    .getElementById("accountName")
+    .value
+    .trim();
+
+  if(!name){
+
+    alert("Enter a username.");
+
+    return;
+
+  }
+
+  localStorage.setItem("donut_account",name);
+
+  alert("Account saved!");
+
+}
+
+
+function escapeHTML(text){
+
+  const div=document.createElement("div");
+
+  div.textContent=text;
+
+  return div.innerHTML;
+
+}
+
+
+const savedAccount =
+  localStorage.getItem("donut_account");
+
+if(savedAccount){
+
+  document.getElementById("accountName").value=
+    savedAccount;
+
+}
+
+
+updatePoints();
+
+</script>
+
+</body>
+</html>
